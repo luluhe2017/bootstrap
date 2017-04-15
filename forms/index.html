@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery</title>
+	<link rel="stylesheet" type="text/css" href="bs/css/bootstrap.css">
+	<script type="text/javascript" src="bs/js/jquery-3.2.0.min.js"></script>
+	<script type="text/javascript" src="bs/js/bootstrap.js"></script>
+	<style>
+	   *{padding: 0px;
+	     margin:0px;}
+
+	   .error{color: red;
+	          font-weight: bold;
+	          display: none;}
+	    #submit{height: 30px;width: 50px;margin-top: 20px;}
+	    .glyphicon{display: none;}
+	</style> 
+</head>
+<body>
+     <div class="container">
+        <div class="page-header">
+            <h2>表单验证</h2>
+        </div>
+
+        <div class="col-md-4 col-md-offset-4">
+            <form action="reg.php" method="post">
+
+            <div class="form-group has-feedback">
+                <label class="control-label">用户名：</label>
+			        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+			        <input type="text" name="username" class="auto form-control" placeholder="username">
+			        <span class="error">用户名不少于6位！</span>
+            </div>
+	        
+
+	       <div class="form-group has-feedback">
+                <label class="control-label">密码：</label>
+		           <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+		           <input type="text" name="password" class="auto form-control" placeholder="password">
+		           <span class="error">密码不少于8位！</span>
+            </div>
+
+
+	       <div class="form-group has-feedback">
+                <label class="control-label">重复密码：</label>
+		           <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+		           <input type="text" name="repassword" class="auto form-control" placeholder="again">
+		           <span class="error">两次密码不一样！</span>
+            </div>
+
+
+	         <div class="form-group has-feedback">
+                <label  class="control-label">手机：</label>
+		           <span class="glyphicon glyphicon-ok form-control-feedback""></span>
+		           <input type="text" name="phone" class="auto form-control" placeholder="phone" maxlength="11">
+		           <span class="error">手机格式不正确！</span>
+            </div>
+
+
+	        <div class="form-group has-feedback">
+                <label class="control-label">邮箱：</label>
+		           <span class="glyphicon glyphicon-ok form-control-feedback""></span>
+		           <input type="text" name="email" class="auto form-control" placeholder="email">
+		           <span class="error">邮箱格式不正确！</span>
+            </div>
+
+
+	        <input type="submit" value="Ok" id="submit" class="btn btn-primary">
+
+        </form>
+
+
+     </div>
+
+
+
+        </div>
+
+
+       
+     
+    
+    
+</body>
+
+ <script>
+      // $('img').toggle(
+      // 	function(){
+      //       this.src="05.jpeg";
+      // 	},
+      // 	function(){
+      // 	    this.src="20.jpeg";
+      // 	}
+      // 	);
+     s=0;
+
+     function error(that){
+     	    $(that).parent().removeClass('has-success');
+     	    $(that).prev().hide();
+    		$(that).parent().addClass('has-error');
+    		$(that).data({'s':0});
+    		$(that).next().show();
+     }
+
+     function correct(that){
+            $(that).parent().removeClass('has-error');
+    		$(that).parent().addClass('has-success');
+            $(that).prev().show();
+    		$(that).data({'s':1});
+    		$(that).next().hide();
+     }
+     
+    $('input[name=username]').blur(function(){
+    	val=this.value;
+    	if(val.length<6){
+    		error(this);
+    	}else{
+    		correct(this);
+    	}
+    	
+    });
+
+    
+    $('input[name=password]').blur(function(){
+    	val=this.value;
+    	if(val.length<8){
+    		error(this);
+    	}else{
+    		correct(this);
+    	}
+    });
+
+
+    $('input[name=repassword]').blur(function(){
+    	val1= $('input[name=password]').val();
+    	val2=this.value;
+    	if(val1!=val2){
+    		error(this);
+    	}else{
+    		correct(this);
+    	}
+    });
+
+
+    $('input[name=phone]').blur(function(){
+    	val=this.value;
+    	if(!val.match(/^137\d{8}$/)){
+    		error(this);
+    	}else{
+    		correct(this);
+    	}
+    });
+
+     
+    $('input[name=email]').blur(function(){
+    	val=this.value;
+    	if(!val.match(/^\w+@\w+\.\w+$/i)){
+    		error(this);
+    	}else{
+    		correct(this);
+    	}
+    });
+
+
+
+    tot=0;
+    $('form').submit(function(){
+    	$('.auto').each(function(){
+               tot+=$(this).data('s');
+    	});
+
+    	if(tot!=5){
+    		 return false;	
+    	}
+    	 
+    	});
+    	
+    	
+   
+      
+   </script>
+
+
+</html>
